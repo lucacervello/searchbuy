@@ -1,8 +1,8 @@
 # searchbuy
 
-generated using Luminus version "3.10.30"
+[![Build Status](https://travis-ci.org/lucacervello/searchbuy.svg?branch=master)](https://travis-ci.org/lucacervello/searchbuy)
 
-FIXME
+UNIMI project
 
 ## Prerequisites
 
@@ -18,4 +18,4 @@ To start a web server for the application, run:
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019 Luca Cervello
