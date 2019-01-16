@@ -34,14 +34,14 @@
                  [selmer "1.12.5"]]
 
   :min-lein-version "2.0.0"
-  
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :resource-paths ["resources"]
   :target-path "target/%s/"
   :main ^:skip-aot searchbuy.core
 
-  :plugins [[lein-immutant "2.1.0"]]
+  :plugins [[lein-immutant "2.1.0"]
+            [migratus-lein "0.7.0"]]
 
   :profiles
   {:uberjar {:omit-source true
@@ -60,7 +60,6 @@
                                  [ring/ring-devel "1.7.1"]
                                  [ring/ring-mock "0.3.2"]]
                   :plugins      [[com.jakemccrary/lein-test-refresh "0.23.0"]]
-                  
                   :source-paths ["env/dev/clj"]
                   :resource-paths ["env/dev/resources"]
                   :repl-options {:init-ns user}

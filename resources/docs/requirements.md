@@ -9,9 +9,12 @@ Aggiunta, modifica e cancellazione
 /merchants GET POST 
 /merchants/:id GET PUT DELETE
 /merchants/:id/products GET POST
-/merchants/:id/products/:id GET PUT DELETE
+/merchants/:id
+/products GET POST
+/products/:id GET PUT DELETE
 /users GET POST
 /users/:id GET PUT DELETE
 /users/:id/preferences GET POST PUT
 /users/:id/orders GET POST
-/users/:id/orders/:id GET PUT DELETE
+/orders GET POST
+/orders/:id GET PUT DELETE
