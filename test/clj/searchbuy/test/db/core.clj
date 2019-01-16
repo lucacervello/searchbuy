@@ -34,3 +34,26 @@
             :last_login nil
             :is_active  nil}
            (db/get-user t-conn {:id "1"})))))
+
+(deftest test-products
+  (jdbc/with-db-transaction [t-conn *db*]
+    (jdbc/db-set-rollback-only! t-conn)
+    (is (= 1 (db/create-product!
+              t-conn
+              {:id         "1"
+               :name "prodotto"
+               :type "fisico"
+               :description "bello",
+               :price 10
+               :shipping_type "aria"
+               :revision 1
+               :merchant "3"})))
+    (is (= {:id         "1"
+            :name "prodotto"
+            :type "fisico"
+            :description "bello",
+            :price 10
+            :shipping_type "aria"
+            :revision 1
+            :merchant "3"}
+           (db/get-product t-conn {:id "1"})))))

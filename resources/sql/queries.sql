@@ -19,3 +19,23 @@ WHERE id = :id
 -- :doc deletes a user record given the id
 DELETE FROM users
 WHERE id = :id
+
+-- :name create-product! :! :n
+-- :doc creates a new product record
+INSERT INTO products
+(id, name, type, description, price, shipping_type, revision, merchant)
+VALUES (:id, :name, :type, :description, :price, :shipping_type, :revision, :merchant)
+
+-- :name update-product! :! :n
+-- :doc updates an existing product record
+UPDATE products
+SET name = :name, type = :type, description = :description, price = :price, shipping_type = :shipping_type, revision = :revision, merchant = :merchant
+WHERE id = :id
+
+-- :name get-product :? :1
+SELECT * from products
+WHERE id = :id
+
+-- :name delete-product! :! :n
+DELETE FROM products
+WHERE id = :id
