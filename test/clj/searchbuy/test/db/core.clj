@@ -29,10 +29,7 @@
             :first_name "Sam"
             :last_name  "Smith"
             :email      "sam.smith@example.com"
-            :pass       "pass"
-            :admin      nil
-            :last_login nil
-            :is_active  nil}
+            :pass       "pass"}
            (db/get-user t-conn {:id "1"})))))
 
 (deftest test-products

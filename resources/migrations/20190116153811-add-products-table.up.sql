@@ -6,5 +6,5 @@ CREATE TABLE products
  price INT,
  shipping_type VARCHAR(30),
  revision INT,
- merchant references merchants(merchant)
+ merchant VARCHAR(300)
 )
