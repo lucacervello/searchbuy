@@ -39,3 +39,21 @@ WHERE id = :id
 -- :name delete-product! :! :n
 DELETE FROM products
 WHERE id = :id
+
+-- :name create-merchant! :! :n
+INSERT INTO merchants
+(id, name, type, telephone, social_number)
+VALUES (:id, :name, :type, :telephone, :social_number)
+
+-- :name update-merchant! :! :n
+UPDATE merchants
+SET name = :name, type = :type, telephone = :telephone, social_number = :social_number
+WHERE id = :id
+
+-- :name get-merchant :? :1
+SELECT * FROM merchants
+WHERE id = :id
+
+-- :name delete-merchant! :! :n
+DELETE FROM merchants
+WHERE id = :id

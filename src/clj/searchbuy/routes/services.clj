@@ -5,6 +5,8 @@
             [searchbuy.merchant :as merchant :refer :all]
             [searchbuy.order :as order :refer :all]
             [searchbuy.product :as product :refer :all]
+            [searchbuy.db.core :refer [*db*] :as db]
+            [searchbuy.util :refer [get-uuid]]
             [schema.core :as s]))
 
 (def service-routes
@@ -19,24 +21,28 @@
       (GET "/" []
         :query-params [{q :- String ""}]
         :summary "return all merchants or query them with q param"
-        :return [Merchant]
-        (ok [{:id 1}]))
+        :return [String]
+        (ok ["hello" "hi"]))
       (POST "/" []
         :body [body NewMerchant]
         :return Merchant
-        (ok {:id 1}))
+        (ok (let [uuid (get-uuid)]
+              (do (db/create-merchant! *db* (assoc body :id uuid))
+                  (db/get-merchant *db* {:id uuid})))))
       (GET "/:id" []
         :path-params [id :- String]
         :return Merchant
-        (ok))
+        (ok (db/get-merchant *db* {:id id})))
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body NewMerchant]
         :return Merchant
-        (ok))
+        (ok (do (db/update-merchant! *db* (assoc body :id id))
+                (db/get-merchant *db* {:id id}))))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok))
+        (do (db/delete-merchant! *db* {:id id})
+            (ok)))
       (GET "/:id/products" []
         :path-params [id :- String]
         :return [Product]
@@ -50,19 +56,23 @@
       (POST "/" []
         :body [body NewProduct]
         :return Product
-        (ok))
+        (ok (let [uuid (get-uuid)]
+              (do (db/create-product! *db* (assoc body :id uuid))
+                  (db/get-product *db* {:id uuid})))))
       (GET "/:id" []
         :path-params [id :- String]
         :return Product
-        (ok))
+        (ok (db/get-product *db* {:id id})))
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body Product]
         :return Product
-        (ok))
+        (ok (do (db/update-product! *db* (assoc body :id id))
+                (db/get-product *db* {:id id}))))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok)))
+        (do (db/delete-product! *db* {:id id})
+            (ok))))
     (context "/users" []
       :tags ["user"]
       (GET "/" []
@@ -73,19 +83,23 @@
       (POST "/" []
         :body [body NewUser]
         :return User
-        (ok))
+        (ok (let [uuid (get-uuid)]
+              (do (db/create-user! *db* (assoc body :id uuid))
+                  (db/get-user *db* {:id uuid})))))
       (GET "/:id" []
         :path-params [id :- String]
         :return User
-        (ok))
+        (ok (db/get-user *db* {:id id})))
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body NewUser]
         :return User
-        (ok))
+        (ok (do (db/update-user! *db* (assoc body :id id))
+                (db/get-user *db* {:id id}))))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok))
+        (do (db/delete-user! *db* {:id id})
+            (ok)))
       (GET "/:id/preferences" []
         :path-params [id :- String]
         :return Preferences
