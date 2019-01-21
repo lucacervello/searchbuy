@@ -5,3 +5,4 @@ services:
 
 before_script:
   - psql -c 'create database searchbuy_test;' -U postgres
+  - lein run migrate
