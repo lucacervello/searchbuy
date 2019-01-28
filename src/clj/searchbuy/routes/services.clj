@@ -22,13 +22,14 @@
         :query-params [{q :- String ""}]
         :summary "return all merchants or query them with q param"
         :return [String]
-        (ok ["hello" "hi"]))
+        (ok (map :id (db/get-all-merchant-ids *db*))))
       (POST "/" []
         :body [body NewMerchant]
-        :return Merchant
-        (ok (let [uuid (get-uuid)]
-              (do (db/create-merchant! *db* (assoc body :id uuid))
-                  (db/get-merchant *db* {:id uuid})))))
+        :return String
+        (let [uuid (get-uuid)]
+          (if (= 1 (db/create-merchant! *db* (assoc body :id uuid)))
+            (ok uuid)
+            (internal-server-error))))
       (GET "/:id" []
         :path-params [id :- String]
         :return Merchant
@@ -36,16 +37,18 @@
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body NewMerchant]
-        :return Merchant
-        (ok (do (db/update-merchant! *db* (assoc body :id id))
-                (db/get-merchant *db* {:id id}))))
+        :return String
+        (if (= 1 (db/update-merchant! *db* (assoc body :id id)))
+          (ok id)
+          (internal-server-error)))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (do (db/delete-merchant! *db* {:id id})
-            (ok)))
+        (if (= 1 (db/delete-merchant! *db* {:id id}))
+          (ok)
+          (internal-server-error)))
       (GET "/:id/products" []
         :path-params [id :- String]
-        :return [Product]
+        :return [String]
         (ok)))
     (context "/products" []
       :tags ["product"]

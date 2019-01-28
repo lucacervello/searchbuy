@@ -18,20 +18,42 @@
     (f)))
 
 (deftest test-merchants
-  (testing "/ route"
-    (let [response (app (request :get "/merchants"))]
-      (is (= 200 (:status response)))
-      (is (= ["hello" "hi"] (parse-json (:body response))))))
   (testing "POST /merchants"
     (let [merchant {:name "merchant"
                     :type "solo"
                     :telephone "233423453233"
                     :social_number "jdaskdjasdk"}
           response (app (-> (request :post "/merchants" )
-                            (json-body merchant)) )]
+                            (json-body merchant)))
+          response-id (parse-json (:body response))
+          _ (app (request :delete (str "/merchants/" response-id)))]
       (is (= 200 (:status response)))
-      (is (= merchant (dissoc (parse-json (:body response)) :id)))))
-  )
+      (is (string? response-id))))
+  (testing "GET /merchants"
+    (let [response (app (request :get "/merchants"))]
+      (is (= 200 (:status response)))
+      (is (= [] (parse-json (:body response))))))
+  (testing "PUT /merchants"
+    (let [merchant {:name "merchant"
+                    :type "solo"
+                    :telephone "233423453233"
+                    :social_number "jdaskdjasdk"}
+          merchant' {:name "merchant 1"
+                     :type "solo"
+                     :telephone "233423453233"
+                     :social_number "jdaskdjasdk"}
+          response (app (-> (request :post "/merchants" )
+                            (json-body merchant)))
+          response-id (parse-json (:body response))
+          response' (app (-> (request :put (str "/merchants/" response-id))
+                             (json-body merchant')))
+          _ (app (request :delete (str "/merchants/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))
+      (is (= 200 (:status response')))
+      (is (= response-id (parse-json (:body response')))))))
+
+(deftest product-test )
 
 (deftest test-app
   (testing "main route"

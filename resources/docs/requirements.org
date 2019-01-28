@@ -1,0 +1,51 @@
+
+* Relazione Applicazione REST Luca Cervello 856222
+
+** Identificazione entitá
+
+- prodotti
+- venditori
+- clienti
+- ordini
+
+** Endpoints
+
+*** Prodotti
+**** GET /products
+     Questo endpoint restituirá solamente gli id, dei prodotti disponibili.
+     Ho previsto una query per fare una ricerca dei prodotti.
+     Ho deciso di restituire solo gli id perché cosi l'interfaccia mi sembra piú pulita e penso che sia la soluzione piú elastica
+     e piu slegata dal frontend.
+     ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
+     riguardanti il prodotto o addirittura tutte le informazioni riguardante il prodotto.
+**** POST /products
+     Aggiunge un prodotto
+**** GET /products/:id 
+     Restituisce tutte le informazioni riguardate un prodotto
+**** PUT /products/:id 
+     Modifica le informazioni riguardanti in prodotto
+**** DELETE /products/:id
+     Elimina un prodotto
+*** Venditori
+**** GET /merchants
+     Restituisce gli id dei merchants
+* requirements
+Aggiunta, modifica e cancellazione
+- prodotti in vendita
+- venditori
+- clienti della piattaforma e loro preferenze
+- acquisti effettuati
+* First draft endpoints
+
+/merchants GET POST 
+/merchants/:id GET PUT DELETE
+/merchants/:id/products GET POST
+/merchants/:id
+/products GET POST
+/products/:id GET PUT DELETE
+/users GET POST
+/users/:id GET PUT DELETE
+/users/:id/preferences GET POST PUT
+/users/:id/orders GET POST
+/orders GET POST
+/orders/:id GET PUT DELETE

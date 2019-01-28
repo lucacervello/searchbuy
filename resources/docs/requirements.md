@@ -1,3 +1,18 @@
+# Relazione Applicazione REST Luca Cervello 856222
+
+## Identificazione entitá
+
+- prodotti
+- venditori
+- clienti
+- ordini
+
+## Endpoints
+
+### Prodotti
+
+
+
 # requirements
 Aggiunta, modifica e cancellazione
 - prodotti in vendita

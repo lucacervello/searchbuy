@@ -54,6 +54,12 @@ WHERE id = :id
 SELECT * FROM merchants
 WHERE id = :id
 
+-- :name get-all-merchant-ids :? :*
+SELECT id FROM merchants;
+
 -- :name delete-merchant! :! :n
 DELETE FROM merchants
 WHERE id = :id
+
+-- :name delete-all-merchants! :? :n
+DELETE FROM merchants;
