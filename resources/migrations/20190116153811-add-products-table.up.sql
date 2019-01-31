@@ -8,4 +8,3 @@ CREATE TABLE products
  revision INT,
  merchant VARCHAR(300)
 )
-  

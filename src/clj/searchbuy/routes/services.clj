@@ -22,7 +22,7 @@
         :query-params [{q :- String ""}]
         :summary "return all merchants or query them with q param"
         :return [String]
-        (ok (map :id (db/get-all-merchant-ids *db*))))
+        (ok (map :id (db/get-merchants-by-name *db* {:name q}))))
       (POST "/" []
         :body [body NewMerchant]
         :return String
@@ -49,46 +49,51 @@
       (GET "/:id/products" []
         :path-params [id :- String]
         :return [String]
-        (ok)))
+        (ok (db/get-products-by-merchant *db* {:merchant id}))))
     (context "/products" []
       :tags ["product"]
       (GET "/" []
         :query-params [{q :- String ""}]
         :summary "return all products or query them with q param"
-        (ok {:query q}))
+        :return [String]
+        (ok (map :id (db/get-products-by-name *db* {:name q}))))
       (POST "/" []
         :body [body NewProduct]
-        :return Product
-        (ok (let [uuid (get-uuid)]
-              (do (db/create-product! *db* (assoc body :id uuid))
-                  (db/get-product *db* {:id uuid})))))
+        :return String
+        (let [uuid (get-uuid)]
+          (if (= 1 (db/create-product! *db* (assoc body :id uuid)))
+            (ok uuid)
+            (internal-server-error))))
       (GET "/:id" []
         :path-params [id :- String]
         :return Product
         (ok (db/get-product *db* {:id id})))
       (PUT "/:id" []
         :path-params [id :- String]
-        :body [body Product]
-        :return Product
-        (ok (do (db/update-product! *db* (assoc body :id id))
-                (db/get-product *db* {:id id}))))
+        :body [body NewProduct]
+        :return String
+        (if (= 1 (db/update-product! *db* (assoc body :id id)))
+          (ok id)
+          (internal-server-error)))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (do (db/delete-product! *db* {:id id})
-            (ok))))
+        (if (= 1 (db/delete-product! *db* {:id id}))
+          (ok)
+          (internal-server-error)))
     (context "/users" []
       :tags ["user"]
       (GET "/" []
         :query-params [{q :- String ""}]
-        :summary "return all products or query them with q param"
-        :return [User]
-        (ok {:query q}))
+        :summary "return all users or query them with q param"
+        :return [String]
+        (ok (map :id (db/get-users-by-name *db* {:name q}))))
       (POST "/" []
         :body [body NewUser]
-        :return User
-        (ok (let [uuid (get-uuid)]
-              (do (db/create-user! *db* (assoc body :id uuid))
-                  (db/get-user *db* {:id uuid})))))
+        :return String
+        (let [uuid (get-uuid)]
+          (if (= 1 (db/create-user! *db* (assoc body :id uuid)))
+            (ok uuid)
+            (internal-server-error))))
       (GET "/:id" []
         :path-params [id :- String]
         :return User
@@ -144,4 +149,4 @@
         (ok))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok)))))
+        (ok))))))

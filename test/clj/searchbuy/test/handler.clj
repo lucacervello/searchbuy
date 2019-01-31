@@ -53,7 +53,52 @@
       (is (= 200 (:status response')))
       (is (= response-id (parse-json (:body response')))))))
 
-(deftest product-test )
+(deftest product-test
+  (testing "POST product"
+    (let [merchant-id (get-uuid)
+          product {:name "product"
+                   :type "tech"
+                   :description "good monitor"
+                   :price 30000
+                   :shipping_type "fast"
+                   :revision 1
+                   :merchant merchant-id}
+          response (app (-> (request :post "/products")
+                            (json-body product)))
+          response-id (parse-json (:body response))
+          _ (app (request :delete (str "/products/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))))
+  (testing "GET /products"
+    (let [response (app (request :get "/products"))]
+      (is (= 200 (:status response)))
+      (is (= [] (parse-json (:body response))))))
+  (testing "PUT /products"
+    (let [merchant-id (get-uuid)
+          product {:name "product"
+                   :type "tech"
+                   :description "good monitor"
+                   :price 30000
+                   :shipping_type "fast"
+                   :revision 1
+                   :merchant merchant-id}
+          product' {:name "product 1"
+                   :type "technology"
+                   :description "good monitor"
+                   :price 30000
+                   :shipping_type "fast"
+                   :revision 1
+                   :merchant merchant-id}
+          response (app (-> (request :post "/products")
+                            (json-body product)))
+          response-id (parse-json (:body response))
+          response' (app (-> (request :put (str "/products/" response-id))
+                             (json-body product')))
+          _ (app (request :delete (str "/merchants/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))
+      (is (= 200 (:status response')))
+      (is (= response-id (parse-json (:body response')))))))
 
 (deftest test-app
   (testing "main route"

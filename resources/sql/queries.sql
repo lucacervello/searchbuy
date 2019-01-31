@@ -15,6 +15,10 @@ WHERE id = :id
 SELECT * FROM users
 WHERE id = :id
 
+-- :name get-users-by-name :1 :*
+SELECT * FROM users
+WHERE first_name LIKE :name
+
 -- :name delete-user! :! :n
 -- :doc deletes a user record given the id
 DELETE FROM users
@@ -36,6 +40,14 @@ WHERE id = :id
 SELECT * from products
 WHERE id = :id
 
+-- :name get-products-by-merchant :1 :*
+SELECT * FROM products
+WHERE :merchant = merchant
+
+-- :name get-products-by-name :1 :*
+SELECT * FROM products
+WHERE name LIKE :name
+
 -- :name delete-product! :! :n
 DELETE FROM products
 WHERE id = :id
@@ -56,6 +68,10 @@ WHERE id = :id
 
 -- :name get-all-merchant-ids :? :*
 SELECT id FROM merchants;
+
+-- :name get-merchants-by-name :1 :*
+SELECT * from merchants
+WHERE name like :name
 
 -- :name delete-merchant! :! :n
 DELETE FROM merchants
