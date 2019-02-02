@@ -79,3 +79,28 @@ WHERE id = :id
 
 -- :name delete-all-merchants! :? :n
 DELETE FROM merchants;
+
+-- :name create-order! :! :n
+INSERT INTO orders
+(id, order_date, estimated_delivery_date, merchant_id, product_id, user_id)
+VALUES (:id, :order_date, :estimated_delivery_date, :merchant_id, :product_id, :user_id)
+
+-- :name update-order! :! :n
+UPDATE orders
+SET order_date = :order_date, estimated_delivery_date = :estimated_delivery_date, merchant_id = :merchant_id, product_id = :product_id, user_id = :user_id
+WHERE id = :id
+
+-- :name get-order :? :1
+SELECT * FROM orders
+WHERE id = :id
+
+-- :name get-orders-by-user :1 :*
+SELECT * FROM orders
+WHERE user_id = :user_id
+
+-- :name get-all-orders :? :*
+SELECT * FROM orders
+
+-- :name delete-order! :! :n
+DELETE FROM orders
+WHERE id = :id

@@ -107,8 +107,9 @@
           (internal-server-error)))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (do (db/delete-user! *db* {:id id})
-            (ok)))
+        (if (= 1 (db/delete-user! *db* {:id id}))
+          (ok)
+          (internal-server-error)))
       (GET "/:id/preferences" []
         :path-params [id :- String]
         :return Preferences
@@ -119,10 +120,9 @@
         :return Preferences
         (ok))
       (GET "/:id/orders" []
-        :query-params [{q :- String ""}]
         :path-params [id :- String]
-        :return [Order]
-        (ok))
+        :return [String]
+        (ok (db/get-orders-by-user *db* {:user_id id})))
       (POST "/:id/orders" []
         :path-params [id :- String]
         :body [body NewOrder]
@@ -133,21 +133,28 @@
       (GET "/" []
         :query-params [{q :- String ""}]
         :summary "return all products or query them with q param"
-        :return [Order]
-        (ok {:query q}))
+        :return [String]
+        (ok (map :id (db/get-all-orders *db*))))
       (POST "/" []
         :body [body NewOrder]
-        :return Order
-        (ok))
+        :return String
+        (let [uuid (get-uuid)]
+          (if (= 1 (db/create-order! *db* (assoc body :id uuid)))
+            (ok uuid)
+            (internal-server-error))))
       (GET "/:id" []
         :path-params [id :- String]
         :return Order
-        (ok))
+        (ok (db/get-order *db* {:id id})))
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body NewOrder]
-        :return Order
-        (ok))
+        :return String
+        (if (= 1 (db/update-order! *db* (assoc body :id id)))
+          (ok id)
+          (internal-server-error)))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok)))))
+        (if (= 1 (db/delete-order! *db* {:id id}))
+          (ok)
+          (internal-server-error))))))

@@ -5,7 +5,8 @@
             [searchbuy.middleware.formats :as formats]
             [searchbuy.util :refer [get-uuid]]
             [muuntaja.core :as m]
-            [mount.core :as mount]))
+            [mount.core :as mount]
+            [java-time :as time]))
 
 (defn parse-json [body]
   (m/decode formats/instance "application/json" body))
@@ -131,6 +132,72 @@
           response' (app (-> (request :put (str "/users/" response-id))
                              (json-body user')))
           _ (app (request :delete (str "/users/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))
+      (is (= 200 (:status response')))
+      (is (= response-id (parse-json (:body response'))))))
+  (testing "GET orders from merchant"
+    (let [merchant-id (get-uuid)
+          product-id (get-uuid)
+          user {:first_name "Marco"
+                :last_name "Cervello"
+                :email "l.c@luca.com"
+                :pass "hey"}
+          user-response (app (-> (request :post "/users")
+                            (json-body user)))
+          user-id (parse-json (:body user-response))
+          order {:order_date (time/local-date 2019 1 1)
+                 :estimated_delivery_date (time/local-date 2019 1 7)
+                 :merchant_id merchant-id
+                 :product_id product-id
+                 :user_id user-id}
+          order-response (app (-> (request :post "/orders")
+                            (json-body order)))
+          order-id (parse-json (:body order-response))
+          response (app (request :get (str "/users/" user-id "/orders")))]
+      (is (= 200 (:status response)))
+      (is (= [order-id] (parse-json (:body order-response)))))))
+
+(deftest orders-test
+  (testing "POST order"
+    (let [merchant-id (get-uuid)
+          product-id (get-uuid)
+          user-id (get-uuid)
+          order {:order_date (time/local-date 2019 1 1)
+                 :estimated_delivery_date (time/local-date 2019 1 7)
+                 :merchant_id merchant-id
+                 :product_id product-id
+                 :user_id user-id}
+          response (app (-> (request :post "/orders")
+                            (json-body order)))
+          response-id (parse-json (:body response))
+          _ (app (request :delete (str "/orders/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))))
+  (testing "GET /orders"
+    (let [response (app (request :get "/orders"))]
+      (is (= 200 (:status response)))
+      (is (= [] (parse-json (:body response))))))
+  (testing "PUT /orders"
+    (let [merchant-id (get-uuid)
+          product-id (get-uuid)
+          user-id (get-uuid)
+          order {:order_date (time/local-date 2019 1 1)
+                 :estimated_delivery_date (time/local-date 2019 1 7)
+                 :merchant_id merchant-id
+                 :product_id product-id
+                 :user_id user-id}
+          order' {:order_date (time/local-date 2019 1 1)
+                  :estimated_delivery_date (time/local-date 2019 1 9)
+                  :merchant_id merchant-id
+                  :product_id product-id
+                  :user_id user-id}
+          response (app (-> (request :post "/orders" )
+                            (json-body order)))
+          response-id (parse-json (:body response))
+          response' (app (-> (request :put (str "/orders/" response-id))
+                             (json-body order')))
+          _ (app (request :delete (str "/orders/" response-id)))]
       (is (= 200 (:status response)))
       (is (string? response-id))
       (is (= 200 (:status response')))

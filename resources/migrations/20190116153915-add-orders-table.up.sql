@@ -1,5 +1,5 @@
 CREATE TABLE orders
-(id serial PRIMARY KEY,
+(id VARCHAR(300),
  order_date TIMESTAMP,
  estimated_delivery_date TIMESTAMP,
  merchant_id VARCHAR(300),
