@@ -1,6 +1,6 @@
 (ns searchbuy.order
-  (:require [schema.core :as s]
-            [java.time :refer [LocalDate]]))
+  (:require [schema.core :as s])
+  (:import java.time.LocalDate))
 
 (s/defschema Order {:id String
                     :order_date LocalDate

@@ -122,12 +122,7 @@
       (GET "/:id/orders" []
         :path-params [id :- String]
         :return [String]
-        (ok (db/get-orders-by-user *db* {:user_id id})))
-      (POST "/:id/orders" []
-        :path-params [id :- String]
-        :body [body NewOrder]
-        :return Order
-        (ok)))
+        (ok (map :id (db/get-orders-by-user *db* {:user_id id})))))
     (context "/orders" []
       :tags ["order"]
       (GET "/" []

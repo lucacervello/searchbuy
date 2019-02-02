@@ -154,9 +154,11 @@
           order-response (app (-> (request :post "/orders")
                             (json-body order)))
           order-id (parse-json (:body order-response))
-          response (app (request :get (str "/users/" user-id "/orders")))]
+          response (app (request :get (str "/users/" user-id "/orders")))
+          _ (app (request :delete (str "/users/" user-id)))
+          _ (app (request :delete (str "/orders/" order-id)))]
       (is (= 200 (:status response)))
-      (is (= [order-id] (parse-json (:body order-response)))))))
+      (is (= [order-id] (parse-json (:body response)))))))
 
 (deftest orders-test
   (testing "POST order"
