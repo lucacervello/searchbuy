@@ -79,7 +79,7 @@
         :path-params [id :- String]
         (if (= 1 (db/delete-product! *db* {:id id}))
           (ok)
-          (internal-server-error)))
+          (internal-server-error))))
     (context "/users" []
       :tags ["user"]
       (GET "/" []
@@ -101,9 +101,10 @@
       (PUT "/:id" []
         :path-params [id :- String]
         :body [body NewUser]
-        :return User
-        (ok (do (db/update-user! *db* (assoc body :id id))
-                (db/get-user *db* {:id id}))))
+        :return String
+        (if (= 1 (db/update-user! *db* (assoc body :id id)))
+          (ok id)
+          (internal-server-error)))
       (DELETE "/:id" []
         :path-params [id :- String]
         (do (db/delete-user! *db* {:id id})
@@ -149,4 +150,4 @@
         (ok))
       (DELETE "/:id" []
         :path-params [id :- String]
-        (ok))))))
+        (ok)))))

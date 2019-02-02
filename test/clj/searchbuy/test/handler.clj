@@ -94,7 +94,43 @@
           response-id (parse-json (:body response))
           response' (app (-> (request :put (str "/products/" response-id))
                              (json-body product')))
-          _ (app (request :delete (str "/merchants/" response-id)))]
+          _ (app (request :delete (str "/products/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))
+      (is (= 200 (:status response')))
+      (is (= response-id (parse-json (:body response')))))))
+
+(deftest users-test
+  (testing "POST user"
+    (let [user {:first_name "Luca"
+                :last_name "Cervello"
+                :email "l.c@luca.com"
+                :pass "hey"}
+          response (app (-> (request :post "/users")
+                            (json-body user)))
+          response-id (parse-json (:body response))
+          _ (app (request :delete (str "/users/" response-id)))]
+      (is (= 200 (:status response)))
+      (is (string? response-id))))
+  (testing "GET user"
+    (let [response (app (request :get "/users"))]
+      (is (= 200 (:status response)))
+      (is (= [] (parse-json (:body response))))))
+  (testing "PUT user"
+    (let [user {:first_name "Luca"
+                :last_name "Cervello"
+                :email "l.c@luca.com"
+                :pass "hey"}
+          user' {:first_name "Marco"
+                 :last_name "Cervello"
+                 :email "l.c@luca.com"
+                 :pass "hey"}
+          response (app (-> (request :post "/users")
+                            (json-body user)))
+          response-id (parse-json (:body response))
+          response' (app (-> (request :put (str "/users/" response-id))
+                             (json-body user')))
+          _ (app (request :delete (str "/users/" response-id)))]
       (is (= 200 (:status response)))
       (is (string? response-id))
       (is (= 200 (:status response')))
