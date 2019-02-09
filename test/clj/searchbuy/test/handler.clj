@@ -31,9 +31,19 @@
       (is (= 200 (:status response)))
       (is (string? response-id))))
   (testing "GET /merchants"
-    (let [response (app (request :get "/merchants"))]
+    (let [response (app (request :get "/merchants"))
+          merchant {:name "merchant"
+                    :type "solo"
+                    :telephone "233423453233"
+                    :social_number "jdaskdjasdk"}
+          merchant-response (app (-> (request :post "/merchants" )
+                                     (json-body merchant)))
+          merchant-response-id (parse-json (:body merchant-response))
+          response' (app (request :get "/merchants"))
+          _ (app (request :delete (str "/merchants/" merchant-response-id)))]
       (is (= 200 (:status response)))
-      (is (= [] (parse-json (:body response))))))
+      (is (= [] (parse-json (:body response))))
+      (is (= [merchant-response-id] (parse-json (:body response'))))))
   (testing "PUT /merchants"
     (let [merchant {:name "merchant"
                     :type "solo"

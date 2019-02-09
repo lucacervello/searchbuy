@@ -69,9 +69,9 @@ WHERE id = :id
 -- :name get-all-merchant-ids :? :*
 SELECT id FROM merchants;
 
--- :name get-merchants-by-name :1 :*
+-- :name get-merchants-by-name :? :*
 SELECT * from merchants
-WHERE name like :name
+WHERE name LIKE :name
 
 -- :name delete-merchant! :! :n
 DELETE FROM merchants

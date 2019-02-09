@@ -23,7 +23,7 @@
         :query-params [{q :- String ""}]
         :summary "return all merchants or query them with q param"
         :return [String]
-        (ok (map :id (db/get-merchants-by-name *db* {:name q}))))
+        (ok (map :id (db/get-merchants-by-name *db* {:name (str q "%")}))))
       (POST "/" []
         :body [body NewMerchant]
         :return String
@@ -57,7 +57,7 @@
         :query-params [{q :- String ""}]
         :summary "return all products or query them with q param"
         :return [String]
-        (ok (map :id (db/get-products-by-name *db* {:name q}))))
+        (ok (map :id (db/get-products-by-name *db* {:name (str q "%")}))))
       (POST "/" []
         :body [body NewProduct]
         :return String
@@ -87,7 +87,7 @@
         :query-params [{q :- String ""}]
         :summary "return all users or query them with q param"
         :return [String]
-        (ok (map :id (db/get-users-by-name *db* {:name q}))))
+        (ok (map :id (db/get-users-by-name *db* {:name (str q "%")}))))
       (POST "/" []
         :body [body NewUser]
         :return String

@@ -105,6 +105,12 @@
                :type "fisico"
                :telephone "333232313"
                :social_number "crvelelejd94jnb2"})))
+    (is (= [{:id uuid
+            :name "merchant"
+            :type "fisico"
+            :telephone "333232313"
+            :social_number "crvelelejd94jnb2"}]
+           (db/get-merchants-by-name t-conn {:name "%"})))
     (is (= {:id uuid
             :name "merchant"
             :type "fisico"
