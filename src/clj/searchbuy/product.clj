@@ -11,8 +11,3 @@
                       :merchant String})
 
 (s/defschema NewProduct (dissoc Product :id))
-
-(s/defschema Preferences {:id Long})
-
-(s/defschema NewPreferences (dissoc Preferences :id))
-

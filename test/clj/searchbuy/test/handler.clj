@@ -136,7 +136,34 @@
       (is (string? response-id))
       (is (= 200 (:status response')))
       (is (= response-id (parse-json (:body response'))))))
-  (testing "GET orders from merchant"
+  (testing "POST preferences from user"
+    (let [user-id (get-uuid)
+          preferences {:privacy true :category ["health" "tech"]}
+          response (app (-> (request :post (str "/users/" user-id "/preferences"))
+                            (json-body preferences)))]
+      (is (= 200 (:status response)))
+      (is (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id))))
+  (testing "GET preferences from user"
+    (let [user-id (get-uuid)
+          preferences {:privacy true :category ["health" "tech"]}
+          _ (app (-> (request :post (str "/users/" user-id "/preferences"))
+                                 (json-body preferences)))
+          response (app (request :get (str "/users/" user-id "/preferences")))]
+      (is (= 200 (:status response)))
+      (is (= (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id)))))
+  (testing "PUT preferences from user"
+    (let [user-id (get-uuid)
+          preferences {:privacy true :category ["health" "tech"]}
+          preferences' {:privacy true :category ["health"]}
+          response (app (-> (request :post (str "/users/" user-id "/preferences"))
+                     (json-body preferences)))
+          response' (app (-> (request :put (str "/users/" user-id "/preferences"))
+                             (json-body preferences')))]
+      (is (= 200 (:status response)))
+      (is (= 200 (:status response')))
+      (is (= (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id)))
+      (is (= (assoc preferences' :user_id user-id) (dissoc (parse-json (:body response')) :id)))))
+  (testing "GET orders from users"
     (let [merchant-id (get-uuid)
           product-id (get-uuid)
           user {:first_name "Marco"

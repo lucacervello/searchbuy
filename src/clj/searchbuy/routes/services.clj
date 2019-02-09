@@ -5,6 +5,7 @@
             [searchbuy.merchant :as merchant :refer :all]
             [searchbuy.order :as order :refer :all]
             [searchbuy.product :as product :refer :all]
+            [searchbuy.preferences :as preferences :refer :all]
             [searchbuy.db.core :refer [*db*] :as db]
             [searchbuy.util :refer [get-uuid]]
             [schema.core :as s]))
@@ -113,12 +114,45 @@
       (GET "/:id/preferences" []
         :path-params [id :- String]
         :return Preferences
-        (ok))
+        (let [preferences (db/get-preferences-by-user *db* {:user_id id})
+              preferences-id (:id preferences)
+              categories (db/get-category-by-preferences *db* {:preferences_id preferences-id})]
+          (ok (assoc preferences :category (map :name categories)))))
       (POST "/:id/preferences" []
         :path-params [id :- String]
-        :body [body Preferences]
+        :body [body NewPreferences]
         :return Preferences
-        (ok))
+        (let [uuid (get-uuid)
+              preferences-without-category (dissoc body :category)
+              categories (:category body)
+              categories-created? (every? #(= 1 %) (map #(db/create-category! *db* {:id (get-uuid)
+                                                                                    :name %
+                                                                                    :preferences_id uuid}) categories))]
+          (if (and (= 1 (db/create-preferences! *db* (assoc preferences-without-category :id uuid
+                                                            :user_id id)))
+                   categories-created?)
+            (ok (assoc body :id uuid
+                       :user_id id))
+            (internal-server-error))))
+      (PUT "/:id/preferences" []
+        :path-params [id :- String]
+        :body [body NewPreferences]
+        :return Preferences
+        (let [updated? (= 1 (db/update-preferences-by-user! *db* (assoc body :user_id id)))
+              preferences (db/get-preferences-by-user *db* {:user_id id})
+              preferences-id (:id preferences)
+              _ (db/delete-category-by-preferences! *db* {:preferences_id preferences-id})
+              categories-created? (every? #(= 1 %) (map #(db/create-category! *db* {:id (get-uuid)
+                                                                                    :name %
+                                                                                    :preferences_id preferences-id}) (:category body)))]
+          (if (and updated? categories-created?)
+            (ok (assoc preferences :category (:category body)))
+            (internal-server-error))))
+      (DELETE "/:id/preferences" []
+        :path-params [id :- String]
+        (if (= 1 (db/delete-preferences-by-user! *db* {:user_id id}))
+          (ok)
+          (internal-server-error)))
       (GET "/:id/orders" []
         :path-params [id :- String]
         :return [String]

@@ -104,3 +104,39 @@ SELECT * FROM orders
 -- :name delete-order! :! :n
 DELETE FROM orders
 WHERE id = :id
+
+-- :name get-preferences-by-user :1 :1
+SELECT * FROM preferences
+WHERE user_id = :user_id
+
+-- :name create-preferences! :! :n
+INSERT INTO preferences
+(id, privacy, user_id)
+VALUES (:id, :privacy, :user_id)
+
+-- :name update-preferences-by-user! :! :n
+UPDATE preferences
+SET privacy = :privacy
+WHERE user_id = :user_id
+
+-- :name delete-preferences-by-user! :! :n
+DELETE FROM preferences
+WHERE user_id = :user_id
+
+-- :name get-category-by-preferences :1 :*
+SELECT * FROM categories
+WHERE preferences_id = :preferences_id
+
+-- :name create-category! :! :n
+INSERT INTO categories
+(id, name, preferences_id)
+VALUES(:id, :name, :preferences_id)
+
+-- :name update-category-by-preferences! :! :n
+UPDATE categories
+SET name = :name
+WHERE preferences_id = :preferences_id
+
+-- :name delete-category-by-preferences! :! :n
+DELETE FROM categories
+WHERE preferences_id = :preferences_id
