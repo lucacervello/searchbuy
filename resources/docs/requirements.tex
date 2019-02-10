@@ -1,4 +1,4 @@
-% Created 2019-02-10 Sun 15:57
+% Created 2019-02-10 Sun 16:02
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -31,7 +31,7 @@
 
 
 \section{Identificazione entitá}
-\label{sec:org56c52da}
+\label{sec:org0f30cfa}
 \begin{itemize}
 \item prodotto
 \item venditore
@@ -39,7 +39,7 @@
 \item ordine
 \end{itemize}
 \section{Design endpoints}
-\label{sec:orgfff8088}
+\label{sec:org1c01714}
 Su tutti gli endopoints GET delle varie entitá ho deciso di restituire solo gli id perché cosi l'interfaccia 
 mi sembra piú pulita e penso che sia la soluzione piú elastica e piu slegata dal frontend.
 ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
@@ -51,171 +51,171 @@ la get e ricevere le informazioni complete se ne ha bisogno
 Solo per le preferenze, sottoentitá dell'utente, ho deciso di ritornare sempre l'entitá per GET, POST, PUT.
 Essendo le preferenze strettamente collegate al concetto di utente ho deciso di trattarle differentemente.
 \section{Endpoints}
-\label{sec:org2ce0bcc}
+\label{sec:org021c3d6}
 \subsection{Prodotti}
-\label{sec:org9e04b14}
+\label{sec:org30690f9}
 \subsubsection{GET \texttt{/products}}
-\label{sec:org6ec5006}
+\label{sec:org0661651}
 Restituisce gli id dei products.  
 É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/products-screen/get-products.png}
 \end{center}
 \subsubsection{POST \texttt{/products}}
-\label{sec:orga95856c}
+\label{sec:org3a47fa1}
 Aggiunge un prodotto
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/products-screen/post-products.png}
 \end{center}
 \subsubsection{GET \texttt{/products/:id}}
-\label{sec:org521fd37}
+\label{sec:org99672ec}
 Restituisce tutte le informazioni riguardate un prodotto
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/products-screen/get-product.png}
 \end{center}
 \subsubsection{PUT \texttt{/products/:id}}
-\label{sec:orgb28f336}
+\label{sec:orgd58623e}
 Modifica le informazioni riguardanti in prodotto
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/products-screen/put-product.png}
 \end{center}
 \subsubsection{DELETE \texttt{/products/:id}}
-\label{sec:org5251284}
+\label{sec:org9985267}
 Elimina un prodotto
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/products-screen/delete-product.png}
 \end{center}
 
 \subsection{Venditori}
-\label{sec:org2ae61ec}
+\label{sec:orgdc0146d}
 \subsubsection{GET \texttt{/merchants}}
-\label{sec:org2a42432}
+\label{sec:orgf454c8e}
 Restituisce gli id dei venditori
 É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/get-merchants.png}
 \end{center}
 \subsubsection{POST \texttt{/merchants}}
-\label{sec:org4ed0fe2}
+\label{sec:org1018240}
 Aggiunge un venditore
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/post-merchants.png}
 \end{center}
 \subsubsection{GET \texttt{/merchants/:id}}
-\label{sec:org2ca3b55}
+\label{sec:orgda4abaf}
 Restituisce tutte le informazioni riguardate un venditore
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/get-merchant.png}
 \end{center}
 \subsubsection{PUT \texttt{/merchants/:id}}
-\label{sec:orge29cabb}
+\label{sec:orga22b9a4}
 Modifica le informazioni riguardanti in venditore
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/put-merchant.png}
 \end{center}
 \subsubsection{DELETE \texttt{/merchants/:id}}
-\label{sec:org0e82d8a}
+\label{sec:orgcce5ca3}
 Elimina un venditore
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/delete-merchant.png}
 \end{center}
 \subsubsection{GET \texttt{/merchants/:id/products}}
-\label{sec:org2ba6c75}
+\label{sec:org3619ef9}
 Restituisce gli id di tutti i prodotti del venditore
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/merchants-screen/get-products-merchants.png}
 \end{center}
 \subsection{Utenti}
-\label{sec:orgb6f424d}
+\label{sec:org7e86b86}
 \subsubsection{GET \texttt{/users}}
-\label{sec:org5fccb14}
+\label{sec:org677b0ba}
 Restituisce gli id dei utenti
 É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/get-users.png}
 \end{center}
 \subsubsection{POST \texttt{/users}}
-\label{sec:org930a3f8}
+\label{sec:org75b7276}
 Aggiunge un utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/post-users.png}
 \end{center}
 \subsubsection{GET \texttt{/users/:id}}
-\label{sec:orgc517a11}
+\label{sec:orga70236e}
 Restituisce tutte le informazioni riguardate un utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/get-user.png}
 \end{center}
 \subsubsection{PUT \texttt{/users/:id}}
-\label{sec:orgfe9d1ad}
+\label{sec:org53b2dfd}
 Modifica le informazioni riguardanti in utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/put-user.png}
 \end{center}
 \subsubsection{DELETE \texttt{/users/:id}}
-\label{sec:org58b03c4}
+\label{sec:orgb4fbd94}
 Elimina un utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/delete-user.png}
 \end{center}
 \subsubsection{GET \texttt{/users/:id/preferences}}
-\label{sec:orgaa1579a}
+\label{sec:orgaeaf6dd}
 Restituisce tutte le informazioni riguardanti le preferenze
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/get-preferences.png}
 \end{center}
 \subsubsection{POST \texttt{/users/:id/preferences}}
-\label{sec:org36e0b6c}
+\label{sec:orgc63c060}
 Aggiunge le preferenze per l'utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/post-preferences.png}
 \end{center}
 \subsubsection{PUT \texttt{/users/:id/preferences}}
-\label{sec:org9f6cdc6}
+\label{sec:org5db38b9}
 Modifica le preferenze per l'utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/put-preferences.png}
 \end{center}
 \subsubsection{DELETE \texttt{/users/:id/preferences}}
-\label{sec:orge7abb26}
+\label{sec:org5fc7e1f}
 Elimina le preferenze per l'utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/delete-preferences.png}
 \end{center}
 \subsubsection{GET \texttt{/users/:id/orders}}
-\label{sec:org03063f3}
+\label{sec:org5bc1f52}
 Restituisce tutti gli id degli ordini dell'utente
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/users-screen/get-user-orders.png}
 \end{center}
 \subsection{Ordini}
-\label{sec:org3bf4845}
+\label{sec:orged79b8b}
 \subsubsection{GET \texttt{/orders}}
-\label{sec:org04c30f2}
+\label{sec:org15592fc}
 Restituisce tutti gli id degli ordini
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/orders-screen/get-orders.png}
 \end{center}
 \subsubsection{POST \texttt{/orders}}
-\label{sec:orgf9cddaa}
+\label{sec:org1d8d64e}
 Aggiunge un ordine
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/orders-screen/post-orders.png}
 \end{center}
 \subsubsection{GET \texttt{/orders/:id}}
-\label{sec:org396f962}
+\label{sec:orgda2dfad}
 Restituisce tutte le informazioni riguardate un ordine
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/orders-screen/get-order.png}
 \end{center}
 \subsubsection{PUT \texttt{/orders/:id}}
-\label{sec:org90e72ff}
+\label{sec:org7cc5376}
 Modifica le informazioni riguardanti in ordine
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/orders-screen/put-order.png}
 \end{center}
 \subsubsection{DELETE \texttt{/orders/:id}}
-\label{sec:orgf7e03a6}
+\label{sec:org638b699}
 Elimina un ordine
 \begin{center}
 \includegraphics[width=.9\linewidth]{img/orders-screen/delete-order.png}
