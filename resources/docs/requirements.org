@@ -1,51 +1,81 @@
+#+TITLE: Relazione Applicazione REST Luca Cervello 856222
+#+AUTHOR: Luca Cervello
+#+EMAIL: luca.cervello@studenti.unimi.it
 
-* Relazione Applicazione REST Luca Cervello 856222
-
-** Identificazione entitá
-
-- prodotti
-- venditori
-- clienti
-- ordini
-
-** Endpoints
-
-*** Prodotti
-**** GET /products
-     Questo endpoint restituirá solamente gli id, dei prodotti disponibili.
-     Ho previsto una query per fare una ricerca dei prodotti.
-     Ho deciso di restituire solo gli id perché cosi l'interfaccia mi sembra piú pulita e penso che sia la soluzione piú elastica
-     e piu slegata dal frontend.
-     ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
-     riguardanti il prodotto o addirittura tutte le informazioni riguardante il prodotto.
-**** POST /products
-     Aggiunge un prodotto
-**** GET /products/:id 
-     Restituisce tutte le informazioni riguardate un prodotto
-**** PUT /products/:id 
-     Modifica le informazioni riguardanti in prodotto
-**** DELETE /products/:id
-     Elimina un prodotto
-*** Venditori
-**** GET /merchants
-     Restituisce gli id dei merchants
-* requirements
-Aggiunta, modifica e cancellazione
-- prodotti in vendita
-- venditori
-- clienti della piattaforma e loro preferenze
-- acquisti effettuati
-* First draft endpoints
-
-/merchants GET POST 
-/merchants/:id GET PUT DELETE
-/merchants/:id/products GET POST
-/merchants/:id
-/products GET POST
-/products/:id GET PUT DELETE
-/users GET POST
-/users/:id GET PUT DELETE
-/users/:id/preferences GET POST PUT
-/users/:id/orders GET POST
-/orders GET POST
-/orders/:id GET PUT DELETE
+* Identificazione entitá
+- prodotto
+- venditore
+- utente
+- ordine
+* Design endpoints
+  Su tutti gli endopoints GET delle varie entitá ho deciso di restituire solo gli id perché cosi l'interfaccia 
+  mi sembra piú pulita e penso che sia la soluzione piú elastica e piu slegata dal frontend.
+  ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
+  riguardanti le varie entitá o addirittura tutte le informazioni riguardante l'entitá.
+  Ho deciso di utilizzare come id delle entitá degli UUID (universally unique identidfier) al posto di utilizzare 
+  degli id generati dal database per aumentare la testabilitá del sistema e per le proprieta' degli UUID.
+  In tutte le post/put ho deciso di ritornare sempre gli uuid, cosi poi se c'é bisogno il forntend puó chiamare
+  la get e ricevere le informazioni complete se ne ha bisogno
+  Solo per le preferenze, sottoentitá dell'utente, ho deciso di ritornare sempre l'entitá per GET, POST, PUT.
+  Essendo le preferenze strettamente collegate al concetto di utente ho deciso di trattarle differentemente.
+* Endpoints
+** Prodotti
+*** GET =/products=
+    Restituisce gli id dei products
+    É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+*** POST =/products=
+    Aggiunge un prodotto
+*** GET =/products/:id=
+    Restituisce tutte le informazioni riguardate un prodotto
+*** PUT =/products/:id=
+    Modifica le informazioni riguardanti in prodotto
+*** DELETE =/products/:id=
+    Elimina un prodotto
+** Venditori
+*** GET =/merchants=
+    Restituisce gli id dei venditori
+    É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+*** POST =/merchants=
+    Aggiunge un venditore
+*** GET =/merchants/:id=
+    Restituisce tutte le informazioni riguardate un venditore
+*** PUT =/merchants/:id=
+    Modifica le informazioni riguardanti in venditore
+*** DELETE =/merchants/:id=
+    Elimina un venditore
+*** GET =/merchants/:id/products=
+    Restituisce gli id di tutti i prodotti del venditore
+** Utenti
+*** GET =/users=
+    Restituisce gli id dei utenti
+    É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+*** POST =/users=
+    Aggiunge un utente
+*** GET =/users/:id=
+    Restituisce tutte le informazioni riguardate un utente
+*** PUT =/users/:id=
+    Modifica le informazioni riguardanti in utente
+*** DELETE =/users/:id=
+    Elimina un utente
+*** GET =/users/:id/preferences=
+    Restituisce tutte le informazioni riguardanti le preferenze
+*** POST =/users/:id/preferences=
+    Aggiunge le preferenze per l'utente
+*** PUT =/users/:id/preferences=
+    Modifica le preferenze per l'utente
+*** DELETE =/users/:id/preferences=
+    Elimina le preferenze per l'utente
+*** GET =/users/:id/orders=
+    Restituisce tutti gli id degli ordini dell'utente
+** Ordini
+*** GET =/orders=
+    Restituisce tutti gli id degli ordini
+*** POST =/orders=
+    Aggiunge un ordine
+*** GET =/orders/:id=
+    Restituisce tutte le informazioni riguardate un ordine
+*** PUT =/orders/:id=
+    Modifica le informazioni riguardanti in ordine
+*** DELETE =/orders/:id=
+    Elimina un ordine
+    

@@ -50,7 +50,7 @@
       (GET "/:id/products" []
         :path-params [id :- String]
         :return [String]
-        (ok (db/get-products-by-merchant *db* {:merchant id}))))
+        (ok (map :id (db/get-products-by-merchant *db* {:merchant id})))))
     (context "/products" []
       :tags ["product"]
       (GET "/" []
