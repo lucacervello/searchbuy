@@ -21,61 +21,88 @@
 * Endpoints
 ** Prodotti
 *** GET =/products=
-    Restituisce gli id dei products
+    Restituisce gli id dei products.  
     É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+    [[file:img/products-screen/get-products.png]]
 *** POST =/products=
     Aggiunge un prodotto
+    [[file:img/products-screen/post-products.png]]
 *** GET =/products/:id=
     Restituisce tutte le informazioni riguardate un prodotto
+    [[file:img/products-screen/get-product.png]]
 *** PUT =/products/:id=
     Modifica le informazioni riguardanti in prodotto
+    [[file:img/products-screen/put-product.png]]
 *** DELETE =/products/:id=
     Elimina un prodotto
+    [[file:img/products-screen/delete-product.png]]
+
 ** Venditori
 *** GET =/merchants=
     Restituisce gli id dei venditori
     É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+    [[file:img/merchants-screen/get-merchants.png]]
 *** POST =/merchants=
     Aggiunge un venditore
+    [[file:img/merchants-screen/post-merchants.png]]
 *** GET =/merchants/:id=
     Restituisce tutte le informazioni riguardate un venditore
+    [[file:img/merchants-screen/get-merchant.png]]
 *** PUT =/merchants/:id=
     Modifica le informazioni riguardanti in venditore
+    [[file:img/merchants-screen/put-merchant.png]]
 *** DELETE =/merchants/:id=
     Elimina un venditore
+    [[file:img/merchants-screen/delete-merchant.png]]
 *** GET =/merchants/:id/products=
     Restituisce gli id di tutti i prodotti del venditore
+    [[file:img/merchants-screen/get-products-merchants.png]]
 ** Utenti
 *** GET =/users=
     Restituisce gli id dei utenti
     É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
+    [[file:img/users-screen/get-users.png]]
 *** POST =/users=
     Aggiunge un utente
+    [[file:img/users-screen/post-users.png]]
 *** GET =/users/:id=
     Restituisce tutte le informazioni riguardate un utente
+    [[file:img/users-screen/get-user.png]]
 *** PUT =/users/:id=
     Modifica le informazioni riguardanti in utente
+    [[file:img/users-screen/put-user.png]]
 *** DELETE =/users/:id=
     Elimina un utente
+    [[file:img/users-screen/delete-user.png]]
 *** GET =/users/:id/preferences=
     Restituisce tutte le informazioni riguardanti le preferenze
+    [[file:img/users-screen/get-preferences.png]]
 *** POST =/users/:id/preferences=
     Aggiunge le preferenze per l'utente
+    [[file:img/users-screen/post-preferences.png]]
 *** PUT =/users/:id/preferences=
     Modifica le preferenze per l'utente
+    [[file:img/users-screen/put-preferences.png]]
 *** DELETE =/users/:id/preferences=
     Elimina le preferenze per l'utente
+    [[file:img/users-screen/delete-preferences.png]]
 *** GET =/users/:id/orders=
     Restituisce tutti gli id degli ordini dell'utente
+    [[file:img/users-screen/get-user-orders.png]]
 ** Ordini
 *** GET =/orders=
     Restituisce tutti gli id degli ordini
+    [[file:img/orders-screen/get-orders.png]]
 *** POST =/orders=
     Aggiunge un ordine
+    [[file:img/orders-screen/post-orders.png]]
 *** GET =/orders/:id=
     Restituisce tutte le informazioni riguardate un ordine
+    [[file:img/orders-screen/get-order.png]]
 *** PUT =/orders/:id=
     Modifica le informazioni riguardanti in ordine
+    [[file:img/orders-screen/put-order.png]]
 *** DELETE =/orders/:id=
     Elimina un ordine
+    [[file:img/orders-screen/delete-order.png]]
     

@@ -1,0 +1,223 @@
+% Created 2019-02-10 Sun 15:57
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Luca Cervello}
+\date{\today}
+\title{Relazione Applicazione REST Luca Cervello 856222}
+\hypersetup{
+ pdfauthor={Luca Cervello},
+ pdftitle={Relazione Applicazione REST Luca Cervello 856222},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.1 (Org mode 9.1.14)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Identificazione entitá}
+\label{sec:org56c52da}
+\begin{itemize}
+\item prodotto
+\item venditore
+\item utente
+\item ordine
+\end{itemize}
+\section{Design endpoints}
+\label{sec:orgfff8088}
+Su tutti gli endopoints GET delle varie entitá ho deciso di restituire solo gli id perché cosi l'interfaccia 
+mi sembra piú pulita e penso che sia la soluzione piú elastica e piu slegata dal frontend.
+ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
+riguardanti le varie entitá o addirittura tutte le informazioni riguardante l'entitá.
+Ho deciso di utilizzare come id delle entitá degli UUID (universally unique identidfier) al posto di utilizzare 
+degli id generati dal database per aumentare la testabilitá del sistema e per le proprieta' degli UUID.
+In tutte le post/put ho deciso di ritornare sempre gli uuid, cosi poi se c'é bisogno il forntend puó chiamare
+la get e ricevere le informazioni complete se ne ha bisogno
+Solo per le preferenze, sottoentitá dell'utente, ho deciso di ritornare sempre l'entitá per GET, POST, PUT.
+Essendo le preferenze strettamente collegate al concetto di utente ho deciso di trattarle differentemente.
+\section{Endpoints}
+\label{sec:org2ce0bcc}
+\subsection{Prodotti}
+\label{sec:org9e04b14}
+\subsubsection{GET \texttt{/products}}
+\label{sec:org6ec5006}
+Restituisce gli id dei products.  
+É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/products-screen/get-products.png}
+\end{center}
+\subsubsection{POST \texttt{/products}}
+\label{sec:orga95856c}
+Aggiunge un prodotto
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/products-screen/post-products.png}
+\end{center}
+\subsubsection{GET \texttt{/products/:id}}
+\label{sec:org521fd37}
+Restituisce tutte le informazioni riguardate un prodotto
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/products-screen/get-product.png}
+\end{center}
+\subsubsection{PUT \texttt{/products/:id}}
+\label{sec:orgb28f336}
+Modifica le informazioni riguardanti in prodotto
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/products-screen/put-product.png}
+\end{center}
+\subsubsection{DELETE \texttt{/products/:id}}
+\label{sec:org5251284}
+Elimina un prodotto
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/products-screen/delete-product.png}
+\end{center}
+
+\subsection{Venditori}
+\label{sec:org2ae61ec}
+\subsubsection{GET \texttt{/merchants}}
+\label{sec:org2a42432}
+Restituisce gli id dei venditori
+É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/get-merchants.png}
+\end{center}
+\subsubsection{POST \texttt{/merchants}}
+\label{sec:org4ed0fe2}
+Aggiunge un venditore
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/post-merchants.png}
+\end{center}
+\subsubsection{GET \texttt{/merchants/:id}}
+\label{sec:org2ca3b55}
+Restituisce tutte le informazioni riguardate un venditore
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/get-merchant.png}
+\end{center}
+\subsubsection{PUT \texttt{/merchants/:id}}
+\label{sec:orge29cabb}
+Modifica le informazioni riguardanti in venditore
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/put-merchant.png}
+\end{center}
+\subsubsection{DELETE \texttt{/merchants/:id}}
+\label{sec:org0e82d8a}
+Elimina un venditore
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/delete-merchant.png}
+\end{center}
+\subsubsection{GET \texttt{/merchants/:id/products}}
+\label{sec:org2ba6c75}
+Restituisce gli id di tutti i prodotti del venditore
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/merchants-screen/get-products-merchants.png}
+\end{center}
+\subsection{Utenti}
+\label{sec:orgb6f424d}
+\subsubsection{GET \texttt{/users}}
+\label{sec:org5fccb14}
+Restituisce gli id dei utenti
+É possibile fare una ricerca per nome passando il parametro \texttt{q} e il nome da cercare o le prime lettere del nome
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/get-users.png}
+\end{center}
+\subsubsection{POST \texttt{/users}}
+\label{sec:org930a3f8}
+Aggiunge un utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/post-users.png}
+\end{center}
+\subsubsection{GET \texttt{/users/:id}}
+\label{sec:orgc517a11}
+Restituisce tutte le informazioni riguardate un utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/get-user.png}
+\end{center}
+\subsubsection{PUT \texttt{/users/:id}}
+\label{sec:orgfe9d1ad}
+Modifica le informazioni riguardanti in utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/put-user.png}
+\end{center}
+\subsubsection{DELETE \texttt{/users/:id}}
+\label{sec:org58b03c4}
+Elimina un utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/delete-user.png}
+\end{center}
+\subsubsection{GET \texttt{/users/:id/preferences}}
+\label{sec:orgaa1579a}
+Restituisce tutte le informazioni riguardanti le preferenze
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/get-preferences.png}
+\end{center}
+\subsubsection{POST \texttt{/users/:id/preferences}}
+\label{sec:org36e0b6c}
+Aggiunge le preferenze per l'utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/post-preferences.png}
+\end{center}
+\subsubsection{PUT \texttt{/users/:id/preferences}}
+\label{sec:org9f6cdc6}
+Modifica le preferenze per l'utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/put-preferences.png}
+\end{center}
+\subsubsection{DELETE \texttt{/users/:id/preferences}}
+\label{sec:orge7abb26}
+Elimina le preferenze per l'utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/delete-preferences.png}
+\end{center}
+\subsubsection{GET \texttt{/users/:id/orders}}
+\label{sec:org03063f3}
+Restituisce tutti gli id degli ordini dell'utente
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/users-screen/get-user-orders.png}
+\end{center}
+\subsection{Ordini}
+\label{sec:org3bf4845}
+\subsubsection{GET \texttt{/orders}}
+\label{sec:org04c30f2}
+Restituisce tutti gli id degli ordini
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/orders-screen/get-orders.png}
+\end{center}
+\subsubsection{POST \texttt{/orders}}
+\label{sec:orgf9cddaa}
+Aggiunge un ordine
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/orders-screen/post-orders.png}
+\end{center}
+\subsubsection{GET \texttt{/orders/:id}}
+\label{sec:org396f962}
+Restituisce tutte le informazioni riguardate un ordine
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/orders-screen/get-order.png}
+\end{center}
+\subsubsection{PUT \texttt{/orders/:id}}
+\label{sec:org90e72ff}
+Modifica le informazioni riguardanti in ordine
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/orders-screen/put-order.png}
+\end{center}
+\subsubsection{DELETE \texttt{/orders/:id}}
+\label{sec:orgf7e03a6}
+Elimina un ordine
+\begin{center}
+\includegraphics[width=.9\linewidth]{img/orders-screen/delete-order.png}
+\end{center}
+\end{document}

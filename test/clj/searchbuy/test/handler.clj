@@ -150,15 +150,18 @@
     (let [user-id (get-uuid)
           preferences {:privacy true :category ["health" "tech"]}
           response (app (-> (request :post (str "/users/" user-id "/preferences"))
-                            (json-body preferences)))]
+                            (json-body preferences)))
+          delete-response (app (request :delete (str "/users/" user-id "/preferences")))]
       (is (= 200 (:status response)))
+      (is (= 200 (:status delete-response)))
       (is (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id))))
   (testing "GET preferences from user"
     (let [user-id (get-uuid)
           preferences {:privacy true :category ["health" "tech"]}
           _ (app (-> (request :post (str "/users/" user-id "/preferences"))
                                  (json-body preferences)))
-          response (app (request :get (str "/users/" user-id "/preferences")))]
+          response (app (request :get (str "/users/" user-id "/preferences")))
+          _ (app (request :delete (str "/users/" user-id "/preferences")))]
       (is (= 200 (:status response)))
       (is (= (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id)))))
   (testing "PUT preferences from user"
@@ -168,7 +171,8 @@
           response (app (-> (request :post (str "/users/" user-id "/preferences"))
                      (json-body preferences)))
           response' (app (-> (request :put (str "/users/" user-id "/preferences"))
-                             (json-body preferences')))]
+                             (json-body preferences')))
+          _ (app (request :delete (str "/users/" user-id "/preferences")))]
       (is (= 200 (:status response)))
       (is (= 200 (:status response')))
       (is (= (assoc preferences :user_id user-id) (dissoc (parse-json (:body response)) :id)))
@@ -196,6 +200,14 @@
           _ (app (request :delete (str "/orders/" order-id)))]
       (is (= 200 (:status response)))
       (is (= [order-id] (parse-json (:body response)))))))
+
+(->> {:order_date (time/local-date 2019 1 1)
+      :estimated_delivery_date (time/local-date 2019 1 9)
+      :merchant_id (get-uuid)
+      :product_id (get-uuid)
+      :user_id (get-uuid)}
+     (m/encode "application/json")
+     slurp)
 
 (deftest orders-test
   (testing "POST order"
