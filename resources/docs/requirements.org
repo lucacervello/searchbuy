@@ -2,17 +2,29 @@
 #+AUTHOR: Luca Cervello
 #+EMAIL: luca.cervello@studenti.unimi.it
 
+* Devops e Deploy
+Ho creato una pipeline di deploy per questo progetto.
+Usando :
+
+- *github* per avere una repository remota del progetto.
+- *travisci* per avere un ambiente in cui i test vengono eseguiti in isolamento.
+- *heroku* per fare la build del progetto e esporre il mio servizio.
+
+Ho collegato questi 3 servizi in modo ad avere un workflow completamente automatico.
+Quindi ogni volta che il codice viene pushato su *github* viene testato su *travisci*
+e se i test hanno avuto un esito positivo il progetto viene deployato su *heroku*.
+
 * Identificazione entitá
 - prodotto
 - venditore
 - utente
 - ordine
 * Design endpoints
-  Su tutti gli endopoints GET delle varie entitá ho deciso di restituire solo gli id perché cosi l'interfaccia 
+  Su tutti gli endopoints GET delle varie entitá ho deciso di restituire solo gli id perché cosi l'interfaccia
   mi sembra piú pulita e penso che sia la soluzione piú elastica e piu slegata dal frontend.
   ovviamente in base alle esigenze del frontend avremmo potuto restituire sia un sottoinsieme delle informazioni
   riguardanti le varie entitá o addirittura tutte le informazioni riguardante l'entitá.
-  Ho deciso di utilizzare come id delle entitá degli UUID (universally unique identidfier) al posto di utilizzare 
+  Ho deciso di utilizzare come id delle entitá degli UUID (universally unique identidfier) al posto di utilizzare
   degli id generati dal database per aumentare la testabilitá del sistema e per le proprieta' degli UUID.
   In tutte le post/put ho deciso di ritornare sempre gli uuid, cosi poi se c'é bisogno il forntend puó chiamare
   la get e ricevere le informazioni complete se ne ha bisogno
@@ -21,7 +33,7 @@
 * Endpoints
 ** Prodotti
 *** GET =/products=
-    Restituisce gli id dei products.  
+    Restituisce gli id dei products.
     É possibile fare una ricerca per nome passando il parametro ~q~ e il nome da cercare o le prime lettere del nome
     [[file:img/products-screen/get-products.png]]
 *** POST =/products=
@@ -105,4 +117,3 @@
 *** DELETE =/orders/:id=
     Elimina un ordine
     [[file:img/orders-screen/delete-order.png]]
-    
